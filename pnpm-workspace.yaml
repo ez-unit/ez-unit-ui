@@ -1,3 +1,0 @@
-overrides:
-  unit-sdk: link:../../../../Library/pnpm/global/5/node_modules/unit-sdk
-  hln_sdk: link:../../../../Library/pnpm/global/5/node_modules/hln_sdk
