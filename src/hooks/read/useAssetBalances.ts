@@ -1,4 +1,5 @@
 import { infoClient } from '@/clients/hlClient';
+import { getSolanaBalance } from '@/clients/solanaClient';
 import { viemEthClient, viemHyperEvmClient } from '@/clients/viemClients';
 import { wagmiConfig } from '@/config/wagmiConfig';
 import {
@@ -10,6 +11,7 @@ import {
   IAssetBalances,
 } from '@/constants/Assets';
 import { SpotBalance } from '@nktkas/hyperliquid';
+import { ConnectedSolanaWallet, useSolanaWallets } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { Address, erc20Abi, parseUnits } from 'viem';
 import { useAccount } from 'wagmi';
@@ -224,24 +226,46 @@ const getHyperCoreBalances = async (address: Address | undefined) => {
 };
 
 export const useGetNativeBalances = () => {
+  const { wallets } = useSolanaWallets();
+  const solanaWallet = wallets.find(
+    (wallet) => wallet.connectorType === 'solana_adapter'
+  );
   const { address } = useAccount();
   const { data, refetch } = useQuery({
     queryKey: ['native-balances', address],
-    queryFn: () => getNativeBalances(address),
+    queryFn: () => getNativeBalances(address, solanaWallet),
     enabled: !!address,
+    refetchInterval: 5000,
     initialData: DEFAULT_ASSET_BALANCES,
   });
   return { data, refetch };
 };
 
-const getNativeBalances = async (address: Address | undefined) => {
+const getNativeBalances = async (
+  address: Address | undefined,
+  solanaWallet: ConnectedSolanaWallet | undefined
+) => {
   const ethBalance =
     (address && (await viemEthClient.getBalance({ address }))) || BigInt(0);
+
+  // Get Solana balance if there's a connected Solana wallet
+
+  const solBalance = solanaWallet
+    ? await getSolanaBalance(solanaWallet.address)
+    : BigInt(0);
+
+  console.log('solBalance', solBalance);
+
   return {
     ...DEFAULT_ASSET_BALANCES,
     [EAsset.ETH]: formatAssetBalance(
       ethBalance,
       ASSETS[EAsset.ETH].decimals,
+      4
+    ),
+    [EAsset.SOL]: formatAssetBalance(
+      solBalance,
+      ASSETS[EAsset.SOL].decimals,
       4
     ),
   };

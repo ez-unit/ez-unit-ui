@@ -5,7 +5,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { ENV_PRIVY_APP_ID } from '@/constants/Env';
+import { ENV_PRIVY_APP_ID, ENV_SOLANA_RPC_URL } from '@/constants/Env';
 import { TransactionProvider } from '@/contexts/TransactionContext';
 import { PrivyProvider } from '@privy-io/react-auth';
 import { toSolanaWalletConnectors } from '@privy-io/react-auth/solana';
@@ -57,7 +57,7 @@ export default function AppProviders({
         solanaClusters: [
           {
             name: 'mainnet-beta',
-            rpcUrl: 'https://api.mainnet-beta.solana.com',
+            rpcUrl: ENV_SOLANA_RPC_URL,
           },
         ],
       }}

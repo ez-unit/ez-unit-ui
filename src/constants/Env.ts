@@ -5,5 +5,8 @@ assert(
 );
 assert(process.env.NEXT_PUBLIC_PRIVY_APP_ID, 'Missing Privy app ID');
 
+assert(process.env.NEXT_PUBLIC_SOLANA_RPC_URL, 'Missing Solana RPC URL');
+
 export const ENV_WC_PROJECT_ID = process.env.NEXT_PUBLIC_WC_PROJECT_ID;
 export const ENV_PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
+export const ENV_SOLANA_RPC_URL = process.env.NEXT_PUBLIC_SOLANA_RPC_URL;
