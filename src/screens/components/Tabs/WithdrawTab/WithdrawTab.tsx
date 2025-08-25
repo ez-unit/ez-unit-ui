@@ -11,6 +11,7 @@ import { useGetUnitFees } from '@/hooks/read/unit/useGetUnitFees';
 import { useAssetPrices } from '@/hooks/read/useAssetPrices';
 import { numbroFormat } from '@/utils/format';
 import { Box, HStack, Input, Stack, Text, VStack } from '@chakra-ui/react';
+import { useConnectWallet, useSolanaWallets } from '@privy-io/react-auth';
 import { useEffect, useMemo } from 'react';
 import { useAccount } from 'wagmi';
 
@@ -19,6 +20,7 @@ export const WithdrawTab = () => {
   const { data: primaryName } = useGetPrimaryName(address);
   const { data: unitFees } = useGetUnitFees();
   const { data: assetPrices } = useAssetPrices();
+
   const {
     asset,
     assetSymbol,
@@ -33,6 +35,19 @@ export const WithdrawTab = () => {
     setWithdrawAddressOrHLName,
     buttonState,
   } = useTransactionContext();
+
+  const { connectWallet } = useConnectWallet({
+    onSuccess: ({ wallet }) => {
+      setWithdrawAddressOrHLName(wallet.address);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const { wallets } = useSolanaWallets();
+  const solanaWallet = wallets.find(
+    (wallet) => wallet.connectorType === 'solana_adapter'
+  );
 
   const withdrawNetworkAsset = useMemo(() => {
     return asset.network === 'spl' || asset.network === 'solana'
@@ -101,6 +116,30 @@ export const WithdrawTab = () => {
                 cursor="pointer"
                 onClick={() => {
                   setWithdrawAddressOrHLName(address);
+                }}
+              >
+                <IconWallet w="12px" h="12px" />
+                <Text>Wallet</Text>
+              </HStack>
+            )}
+            {asset.network === 'solana' && !solanaWallet && (
+              <HStack
+                color="text.link"
+                cursor="pointer"
+                onClick={() => {
+                  connectWallet({});
+                }}
+              >
+                <IconWallet w="12px" h="12px" />
+                <Text>Wallet</Text>
+              </HStack>
+            )}
+            {asset.network === 'solana' && solanaWallet && (
+              <HStack
+                color="text.link"
+                cursor="pointer"
+                onClick={() => {
+                  setWithdrawAddressOrHLName(solanaWallet.address);
                 }}
               >
                 <IconWallet w="12px" h="12px" />
