@@ -1,12 +1,23 @@
 'use client';
 
 import { Box, HStack, Text } from '@chakra-ui/react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { usePrivy } from '@privy-io/react-auth';
 import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
+import { SButton } from '../shared/SButton';
 import ColorToggle from './ColorToggle';
 
 export default function TopNav() {
   const router = useRouter();
+  const { authenticated, logout, login } = usePrivy();
+
+  const handleClick = useCallback(() => {
+    if (!authenticated) {
+      login({ loginMethods: ['wallet'] });
+    } else {
+      logout();
+    }
+  }, [authenticated, login, logout]);
 
   return (
     <Box as="nav">
@@ -44,7 +55,16 @@ export default function TopNav() {
           ></HStack>
         </HStack>
         <HStack gap="1rem" scale={{ base: '0.8', md: '1' }}>
-          <ConnectButton />
+          {/* <ConnectButton /> */}
+          <SButton
+            onClick={handleClick}
+            px="1rem"
+            size="sm"
+            fontSize="18px"
+            borderRadius="1rem"
+          >
+            {authenticated ? 'Logout' : 'Login'}
+          </SButton>
           <ColorToggle />
           {/* <WalletMenu /> */}
         </HStack>

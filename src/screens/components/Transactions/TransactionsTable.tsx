@@ -50,8 +50,6 @@ export const TransactionsTable = () => {
 //   Failure = "failure",
 // }
 
-type LoadingState = 'loading' | 'success' | 'failed';
-
 const OperationAmount = ({
   amount,
   assetSymbol,
