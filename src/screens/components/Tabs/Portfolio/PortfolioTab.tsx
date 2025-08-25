@@ -8,7 +8,7 @@ import {
   useGetNativeBalances,
   useHyperEvmBalances,
 } from '@/hooks/read/useAssetBalances';
-import { HStack, Table } from '@chakra-ui/react';
+import { HStack, Table, Text } from '@chakra-ui/react';
 
 export const PortfolioTab = () => {
   // Fetch all balance types at table level
@@ -19,50 +19,67 @@ export const PortfolioTab = () => {
   const nativeDisabledAssets = [EAsset.HYPE, EAsset.wHYPE, EAsset.BTC];
 
   return (
-    <Table.Root>
-      <Table.Caption />
-      <Table.Header>
-        <Table.Row height="48px">
-          <Table.ColumnHeader>Asset</Table.ColumnHeader>
-          <Table.ColumnHeader>
-            <STooltip content="Native Balance is the balance of the asset on the native chain. Connect your wallet to display it.">
-              Native Balance
-            </STooltip>
-          </Table.ColumnHeader>
-          <Table.ColumnHeader>
-            <STooltip content="HyperCore Balance is the balance on Hyperliquid Exchange.">
-              HyperCore Balance
-            </STooltip>
-          </Table.ColumnHeader>
-          <Table.ColumnHeader>
-            <STooltip content="HyperEVM is Hyperliquid's EVM-compatible chain.">
-              HyperEVM Balance
-            </STooltip>
-          </Table.ColumnHeader>
-          <Table.ColumnHeader>Actions</Table.ColumnHeader>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {Object.values(EAsset).map((asset) => (
-          <PortfolioTableRow
-            key={asset}
-            assetSymbol={asset}
-            nativeBalance={
-              nativeDisabledAssets.includes(asset)
-                ? '-'
-                : nativeBalances[asset].formatted
-            }
-            hyperCoreBalance={hyperCoreBalances[asset].formatted}
-            hyperEvmBalance={hyperEvmBalances[asset].formatted}
-          />
-        ))}
-      </Table.Body>
-      <Table.Footer>
-        <Table.Row>
-          <Table.Cell />
-        </Table.Row>
-      </Table.Footer>
-    </Table.Root>
+    <Table.ScrollArea
+      borderWidth="1px"
+      maxW="100vw"
+      px={{ base: '5px', md: 0 }}
+      border="none"
+    >
+      <Table.Root>
+        <Table.Caption />
+        <Table.Header>
+          <Table.Row height="48px">
+            <Table.ColumnHeader>
+              <Text fontSize={{ base: '8px', md: '12px' }}>Asset</Text>
+            </Table.ColumnHeader>
+            <Table.ColumnHeader>
+              <STooltip content="Native Balance is the balance of the asset on the native chain. Connect your wallet to display it.">
+                <Text fontSize={{ base: '8px', md: '12px' }}>
+                  Native Balance
+                </Text>
+              </STooltip>
+            </Table.ColumnHeader>
+            <Table.ColumnHeader>
+              <STooltip content="HyperCore Balance is the balance on Hyperliquid Exchange.">
+                <Text fontSize={{ base: '8px', md: '12px' }}>
+                  HyperCore Balance
+                </Text>
+              </STooltip>
+            </Table.ColumnHeader>
+            <Table.ColumnHeader>
+              <STooltip content="HyperEVM is Hyperliquid's EVM-compatible chain.">
+                <Text fontSize={{ base: '8px', md: '12px' }}>
+                  HyperEVM Balance
+                </Text>
+              </STooltip>
+            </Table.ColumnHeader>
+            <Table.ColumnHeader>
+              <Text fontSize={{ base: '8px', md: '12px' }}>Actions</Text>
+            </Table.ColumnHeader>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {Object.values(EAsset).map((asset) => (
+            <PortfolioTableRow
+              key={asset}
+              assetSymbol={asset}
+              nativeBalance={
+                nativeDisabledAssets.includes(asset)
+                  ? '-'
+                  : nativeBalances[asset].formatted
+              }
+              hyperCoreBalance={hyperCoreBalances[asset].formatted}
+              hyperEvmBalance={hyperEvmBalances[asset].formatted}
+            />
+          ))}
+        </Table.Body>
+        <Table.Footer>
+          <Table.Row>
+            <Table.Cell />
+          </Table.Row>
+        </Table.Footer>
+      </Table.Root>
+    </Table.ScrollArea>
   );
 };
 
@@ -81,9 +98,9 @@ const PortfolioTableRow = ({
   const { setSelectedBridgeAsset } = useTransactionContext();
 
   return (
-    <Table.Row h="52px">
+    <Table.Row h={{ base: '40px', md: '52px' }}>
       <Table.Cell>
-        <HStack>
+        <HStack fontSize={{ base: '10px', md: '12px' }}>
           <AssetIcon asset={assetSymbol} />
           {asset.symbol}
         </HStack>
@@ -91,11 +108,16 @@ const PortfolioTableRow = ({
       <Table.Cell
         fontWeight="bold"
         color={nativeBalance === '-' ? 'text.secondary' : 'text.primary'}
+        fontSize={{ base: '10px', md: '12px' }}
       >
         {nativeBalance}
       </Table.Cell>
-      <Table.Cell fontWeight="bold">{hyperCoreBalance}</Table.Cell>
-      <Table.Cell fontWeight="bold">{hyperEvmBalance}</Table.Cell>
+      <Table.Cell fontWeight="bold" fontSize={{ base: '10px', md: '12px' }}>
+        {hyperCoreBalance}
+      </Table.Cell>
+      <Table.Cell fontWeight="bold" fontSize={{ base: '10px', md: '12px' }}>
+        {hyperEvmBalance}
+      </Table.Cell>
       <Table.Cell>
         {asset.bridgeAddress && (
           <SButton
@@ -103,6 +125,7 @@ const PortfolioTableRow = ({
             size="xs"
             px="12px"
             h="28px"
+            scale={{ base: '0.7', md: '1' }}
             onClick={() => setSelectedBridgeAsset(assetSymbol)}
           >
             Bridge

@@ -16,7 +16,7 @@ export const TransactionsTable = () => {
         <Text fontSize="16px" fontWeight="bold" color="text.primary" ml="6px">
           Transactions
         </Text>
-        <Text fontSize="16px" color="text.secondary" ml="6px">
+        <Text fontSize="16px" color="text.secondary" ml="6px" lineHeight="1.5">
           Transactions will appear here once you make a deposit or withdraw.
         </Text>
       </VStack>

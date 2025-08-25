@@ -9,16 +9,20 @@ export default function Footer() {
       height="52px"
       as="footer"
       justify="space-between"
-      px="80px"
+      px={{ base: '6px', md: '80px' }}
       align="center"
     >
-      <HStack gap="1rem" align="center">
+      <HStack gap={{ base: '0.5rem', md: '1rem' }} align="center">
         {FooterLinks.map((link) => (
           <FooterLink key={link.href} {...link} />
         ))}
       </HStack>
 
-      <HStack gap="1rem" color="text.gray.9" align="center">
+      <HStack
+        gap={{ base: '0.5rem', md: '1rem' }}
+        color="text.gray.9"
+        align="center"
+      >
         <Link href="https://github.com/ez-unit" target="_blank">
           <GithubIcon width="20px" height="20px" />
         </Link>

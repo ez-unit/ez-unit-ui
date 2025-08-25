@@ -13,8 +13,8 @@ export const WelcomeHeader = () => {
       borderBottom="1px solid"
       borderColor="border.primary"
     >
-      <HStack py="10px">
-        <AvatarGroup size="xl">
+      <HStack py={{ base: '6px', md: '10px' }}>
+        <AvatarGroup size={{ base: 'sm', md: 'xl' }}>
           <Avatar.Root>
             <Avatar.Fallback>
               <Text>EZ</Text>
@@ -23,14 +23,20 @@ export const WelcomeHeader = () => {
           </Avatar.Root>
         </AvatarGroup>
         <VStack alignItems="flex-start">
-          <Text fontSize="xl" fontWeight="bold">
+          <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold">
             Welcome
           </Text>
           {address && !primaryNameData && (
-            <Text fontSize="lg">{formatAddress(address)}</Text>
+            <Text fontSize={{ base: 'sm', md: 'lg' }}>
+              {formatAddress(address)}
+            </Text>
           )}
           {primaryNameData && (
-            <Text color="text.green.9" fontSize="lg" fontWeight="bold">
+            <Text
+              color="text.green.9"
+              fontSize={{ base: 'sm', md: 'lg' }}
+              fontWeight="bold"
+            >
               {primaryNameData}
             </Text>
           )}
