@@ -5,11 +5,22 @@ import { ASSETS, EAsset } from '@/constants/Assets';
 import { useGetUserOperations } from '@/hooks/read/unit/useGetUserOperations';
 import { Operation, OperationState } from '@/lib/unit-sdk';
 import { numbroFormat, scaleBigIntToNumber } from '@/utils/format';
-import { Box, HStack, Spinner, Table, Text } from '@chakra-ui/react';
+import { Box, HStack, Spinner, Table, Text, VStack } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
 export const TransactionsTable = () => {
   const { data } = useGetUserOperations();
+  if (!data || data.operations.length === 0)
+    return (
+      <VStack w="full" mt="1rem" align="left" gap="1rem">
+        <Text fontSize="16px" fontWeight="bold" color="text.primary" ml="6px">
+          Transactions
+        </Text>
+        <Text fontSize="16px" color="text.secondary" ml="6px">
+          Transactions will appear here once you make a deposit or withdraw.
+        </Text>
+      </VStack>
+    );
   return (
     <Box w="full" mt="1rem">
       <Text fontSize="16px" fontWeight="bold" color="text.primary" ml="6px">
@@ -27,6 +38,7 @@ export const TransactionsTable = () => {
             <Table.ColumnHeader>Time</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
+
         <Table.Body>
           {data.operations.map((operation: Operation) => (
             <OperationRow key={operation.operationId} operation={operation} />

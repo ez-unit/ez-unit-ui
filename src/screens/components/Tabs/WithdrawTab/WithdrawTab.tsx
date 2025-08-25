@@ -266,8 +266,14 @@ export const WithdrawTab = () => {
         </SAlert>
         <SAlert type={EAlertType.Error} justifyContent="left">
           <Text fontWeight="bold" lineHeight="1.5">
-            You funds will be permanently lost if you send to an address on any
+            Your funds will be permanently lost if you send to an address on any
             other network.
+          </Text>
+        </SAlert>
+        <SAlert type={EAlertType.Info} w="full" justifyContent="left">
+          <Text fontWeight="bold" lineHeight="1.5">
+            It is recommended to do a test transaction with the minimum before
+            sending larger amounts.
           </Text>
         </SAlert>
       </StackCard>

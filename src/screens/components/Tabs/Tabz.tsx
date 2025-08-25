@@ -9,7 +9,7 @@ export const Tabz = () => {
     <Tabs.Root
       lazyMount
       unmountOnExit
-      defaultValue="withdraw"
+      defaultValue="deposit"
       variant="enclosed"
       w="full"
       as={VStack}
