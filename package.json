@@ -1,0 +1,45 @@
+{
+  "name": "ezunit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "themegen": "npx @chakra-ui/cli typegen ./src/components/ui/theme.ts"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^3.24.2",
+    "@nktkas/hyperliquid": "^0.24.1",
+    "@pythnetwork/hermes-client": "^2.0.0",
+    "@rainbow-me/rainbowkit": "^2.2.8",
+    "@tanstack/react-query": "^5.85.3",
+    "axios": "^1.11.0",
+    "multicoin-address-validator": "^0.5.26",
+    "next": "15.4.6",
+    "next-themes": "^0.4.6",
+    "numbro": "^2.5.0",
+    "pino-pretty": "^13.1.1",
+    "qr-code-styling": "^1.9.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-icons": "^5.5.0",
+    "unit-sdk": "link:../../../../Library/pnpm/global/5/node_modules/unit-sdk",
+    "viem": "^2.33.3",
+    "wagmi": "^2.16.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/multicoin-address-validator": "^0.5.3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
+}
